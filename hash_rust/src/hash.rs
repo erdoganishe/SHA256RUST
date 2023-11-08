@@ -47,12 +47,14 @@ pub fn initialize_w(input_message: &[u8]) -> [u32; 64] {
     for i in 0..16 {
         let chunk = &input_message[i * 4..(i + 1) * 4];
         w[i] = u32::from_be_bytes([chunk[0], chunk[1], chunk[2], chunk[3]]);
+        //println!("w{} = {:032b}", i, w[i]);
     }
 
     for i in 16..64 {
         let s0 = (w[i - 15].rotate_right(7)) ^ (w[i - 15].rotate_right(18)) ^ (w[i - 15] >> 3);
         let s1 = (w[i - 2].rotate_right(17)) ^ (w[i - 2].rotate_right(19)) ^ (w[i - 2] >> 10);
         w[i] = w[i - 16].wrapping_add(s0).wrapping_add(w[i - 7]).wrapping_add(s1);
+        //println!("w{} = {:032b}", i, w[i]);
     }
     
     w
@@ -98,6 +100,9 @@ pub fn compress_function(w: &mut [u32; 64]) -> [u32; 8] {
         c = b;
         b = a;
         a = t1.wrapping_add(t2);
+
+        //println!("a {:032b}, b {:032b}, c {:032b}, d {:032b}, e {:032b}, f {:032b}, g {:032b}, h {:032b}", a, b, c, d, e, f, g, h);
+
     }
     let mut h0: u32 = 0x6a09e667;
     let mut h1: u32 = 0xbb67ae85;
