@@ -6,11 +6,12 @@ use hash::{own_hash};
 use std::time::{Instant};
 
 fn main() {
-    let mut message: Vec<u8> = b"Hello, Worlddddddddddddddddddddddddddddddddddddddd".to_vec();
+    let mut message: Vec<u8> = b"Hello, World".to_vec();
 
     let start = Instant::now();
     let hash = own_hash(&mut message.to_vec());
     let duration = start.elapsed();
+
     println!("Own-256 Hash: {:?}", hash);
     println!("Own-256 Execution Time: {:?}", duration);
 
